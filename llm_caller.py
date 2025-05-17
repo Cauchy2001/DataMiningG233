@@ -63,7 +63,7 @@ print(response)
 - 阿里云模型：前缀为"aliyun/"（例如"aliyun/qwen-max"）
 - 硅基流动 模型：前缀为"silicon/"（例如"silicon/claude-3-opus-20240229"）
 
-@author: yangyi
+@author: 杨绎
 @date: 2025-03-12
 """
 
