@@ -177,7 +177,7 @@ def call_deepseek_model(prompt:list, model:str, temperature=0):
     """
     client = openai.OpenAI(
         api_key=os.getenv("DEEPSEEK_API_KEY"),
-        base_url="https://api.deepseek.com"
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
     )
     
     response = client.chat.completions.create(
@@ -266,8 +266,15 @@ def call_silicon_model(prompt:list, model:str, temperature=0):
 # Example usage
 if __name__ == "__main__":
     # 调用大语言模型示例
-    prompt = [{"role": "user", "content": "Hello, how are you?"}]
-    model = "gpt-3.5-turbo"  # 更改为您想要的模型
+    user_prompt ='''
+        The following is a paragraph from an academic paper. Refinish writing to conform to academic style，improve spelling, grammar, clarity, conciseness and overall readability. If necessary, rewrite the entire sentence. In addition,list all modifications in the Markdown table and explain the reasons for doing so.               
+        Paragraph ：Large language models (LLMs) employ in-context learning (ICL) in downstream tasks. By default, ICL selects demonstrations from a labeled example set to perform few-shot learning. Unfortunately, labeled examples may not always be available, and our study reveals a counterintuitive finding that labeled demonstrations sometimes result in suboptimal ICL performance. Therefore, we unlock an unexplored paradigm {\em unsupervised in-context learning}: amplify ICL using demonstrations selected from unlabeled examples with principally assigned inspiring labels. We mathematically reveal the key challenge that the demonstration construction complexity of unsupervised ICL is exponential times as much as traditional ICL. We propose a principled unsupervised ICL framework with heuristic pruning and importance sampling that decreases the complexity to a practically applicable level and verify its effectiveness in ICL with intensive experiments and analysis. 
+    ''' 
+    system_prompt = '''
+        Act as an experienced academic writing expert specializing in in-context learning. Review my research paper draft, focusing on improving the logical flow, strengthening arguments, and refining language for publication quality. Highlight areas needing clarification or further development, and suggest specific improvements.
+    '''
+    prompt = [{'role': 'system', 'content': system_prompt},{"role": "user", "content": user_prompt}]
+    model = "deepseek-r1"  # 更改为您想要的模型
     
     try:
         response = call_llm(prompt, model)
